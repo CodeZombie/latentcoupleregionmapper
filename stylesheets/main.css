@@ -1,0 +1,100 @@
+header {
+    font-size: large;
+    font-weight: 500;
+}
+#canvas {
+    border: 1px solid black;
+}
+.panel {
+    background-color: var(--background-alt);
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+
+.region_prompt {
+    width:100%;
+    margin-right: 1rem;
+}
+canvas {
+    margin-bottom: 1rem;
+}
+
+.promptweightbar{
+    display:flex; 
+    flex-direction: row; 
+    justify-content: left; 
+    align-items: center;
+}
+
+.region_weight{
+    width:6rem;
+}
+
+.settings_panel{
+    display:flex; 
+    flex-direction: row; 
+    text-align: right;
+    justify-content: left;
+    align-items: center;
+}
+
+
+.image_panel {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+button.small{
+    background-color: var(--background);
+    color: var(--muted);
+    line-height: 0.5rem;
+    padding: 0.5rem 0.75rem;
+}
+
+
+input {
+    flex-grow: 1;
+}
+
+textarea{
+    min-height: 4rem;
+}
+
+.region_header{
+    display:flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
+.toggle_label {
+    flex-shrink: 1;
+}
+
+.region_info {
+    display:flex;
+    flex-direction: row;
+    justify-content: right;
+    flex-grow: 1;
+    margin-right: 2rem;
+}
+
+.title_copy_container {
+    display:flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
+.button_container {
+    display:flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    flex-grow: 1;
+}

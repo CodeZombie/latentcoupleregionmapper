@@ -1,0 +1,129 @@
+<!doctype <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Latent Couple Region Mapper</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/hella.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+    <script src="scripts/region_mapper.js"></script>
+    <link rel="stylesheet" href="stylesheets/water.css">
+
+  </head>
+  <body>
+    <div id="latent_couple_mapper">
+        <div class="grid">
+            <div class="row">
+                <div class="column six">
+                    <header>Latent Couple Region Mapper - <a href="#">Github</a></header>
+                    
+                    <span>By Jeremy "<code>{{this.nick}}</code>" Clark. 
+                </div>
+                <div class="column six">
+                    <div class="panel">
+                        <strong>Instructions</strong> <span @click="toggle_instructions()">{{ this.instructions_visible ? "Hide" : "Show" }}</span>
+                        <div v-if="instructions_visible">
+                            This is a tool for mapping areas of your image for use with the Stable Diffusion <a href="https://github.com/miZyind/sd-webui-latent-couple">Latent Couple Composable Diffusion extension</a>.
+                            <h4>How to use it</h4>
+                            <ul>
+                                <li>Open an image and/or set the size of the canvas</li>
+                                <li>Click and drag on the canvas to draw a Region.</li>
+                                <li>Use the red anchor at the bottom right of a Region to resize it, or click anywhere else on a Region to move it around.</li>
+                                <li>Right-click on Regions to delete them</li>
+                                <li>Regions can be snapped to a grid with the <code>Snap Regions to Grid</code> button.</li>
+                                <li>The grid can be configured or turned off with the <code>Grid</code> settings at the top.</li>
+                                <li>Each of the Regions you create will create a panel at the bottom where you can modify the Region's prompt and weight.</li>
+                                <li>Modifying this prompt or weight will automatically update the values in the <code>Output</code> panel</li>
+                                <li>When you're done configuring the Regions, copy the information in the Output panel using the <code>Copy</code> buttons and paste them into the corresponding sections in the Automatic1111 WebUI extension.</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column six panel imagepanel">
+                    <label for="imageLoader">Image</label>
+                    <input type="file" name="imageLoader" @change="uploadImage"/>
+                    <div class="settings_panel">
+                        <label for="canvas_width">Width</label>
+                        <input type="number" name="canvas_width" min="64" max="8192" v-model.number="canvas_width">
+                        <label for="canvas_height">Height</label>
+                        <input type="number" name="canvas_height" min="64" max="8192" v-model.number="canvas_height">
+                    </div>
+
+                </div>
+                <div class="column six panel">
+                    Grid Settings
+                    <div class="settings_panel">
+                        <label for="cheese">Enabled</label>
+                        <input type="checkbox" name="cheese" id="cheese" v-model="grid_enabled">
+                        <label for="grid_rows">Rows</label>
+                        <input type="number" id="quantity" name="grid_rows" min="1" max="128" v-model.number="grid_rows">
+                        <label for="grid_rows">Columns</label>
+                        <input type="number" id="quantity" name="grid_rows" min="1" max="128" v-model.number="grid_columns">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="image_panel">
+            <canvas ref="canvas" id="canvas" width="512" height="512" oncontextmenu="return false;" @mousemove="onCanvasMouseMove" @mouseup="onCanvasMouseUp" @mousedown="onCanvasMouseDown" @mouseleave="onCanvasMouseLeave"></canvas>
+            <button id="quantize_regions" @click="snapAllRegions()">Snap Regions to Grid</button>
+        </div>
+        <div class="grid">
+            <div class="panel" v-for="(region, index) in [global_region].concat(regions)" v-bind:key="index">
+                <div class="region_header">
+                    <div class="toggle_label">
+                        <input type="checkbox" v-model="region.enabled">
+                        <strong>{{index || "Global"}}</strong>
+                    </div>
+                    <div class="region_info">
+
+                    </div>
+                    <button class="small" v-if="index" @click="deleteRegion(region)">Delete</button>
+                </div>
+                <hr/>
+                
+                <div class="promptweightbar">
+                    <textarea rows=2, type="text" placeholder="prompt" class="region_prompt" name="region_prompt" v-model="region.prompt"></textarea>
+                    <div>
+                    <label for="region_weight">Weight </label>
+                    <input type="number" step="0.01" name="region_weight" class="region_weight" v-model.number="region.weight">
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div><strong>Output</strong></div>
+                <div class="row">
+                    <div class="column four output_text_row">
+                        <div  v-for='keyval in [["Divisions", divisions()], ["Positions", positions()], ["Weights", weights()]]'>
+                            <div class="title_copy_container">
+                                <div>{{keyval[0]}}:</div>
+                                <div class="button_container">
+                                    <button @click="copyText(keyval[1])" class="small">copy</button>
+                                </div>
+                            </div>
+                            <code>{{keyval[1]}}</code>
+                            <hr>
+                        </div>
+
+                    </div>
+                    
+                    <div class="column eight">
+                        <div class="title_copy_container">
+                            <div>Combined Prompt:</div>
+                            <div class="button_container">
+                                <button @click="copyText(prompt())" class="small">copy</button>
+                            </div>
+                        </div>
+                        <pre><code>{{prompt()}}</code></pre>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </body>
+  <script src="scripts/app.js"></script>
+</html>
