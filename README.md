@@ -10,5 +10,7 @@ This web application allows you to create a canvas, or load in an image, then si
 
 # Cool, How Do I Use It?
 
+[Youtube Quickstart Guide](https://www.youtube.com/watch?v=6hIj1UYk3Ck)
+
 # Legal Things
 This codebase includeds a copy of water.css which was writtn by [Kognise](https://github.com/kognise/water.cssd) and released under the MIT public license.
