@@ -1,5 +1,5 @@
-# latentcoupleregionmapper
- Latent Couple Region Mapper
+# 🗺️ Latent Couple Region Mapper
+A web-based tool for drawing and defining regions and prompts for the Stable Diffusion Automatic1111 Latent Couple extension.
 
 [Give It A Try](http://badnoise.net/latentcoupleregionmapper)
 
@@ -13,4 +13,4 @@ This web application allows you to create a canvas, or load in an image, then si
 [Youtube Quickstart Guide](https://www.youtube.com/watch?v=6hIj1UYk3Ck)
 
 # Legal Things
-This codebase includeds a copy of water.css which was writtn by [Kognise](https://github.com/kognise/water.css) and released under the MIT public license.
+This codebase includes a copy of water.css which was written by [Kognise](https://github.com/kognise/water.css) and released under the MIT public license.
